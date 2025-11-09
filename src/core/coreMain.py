@@ -22,7 +22,7 @@ class CoreMain():
                 option = int( input())
 
                 if option == 1:
-                    register.createAccount
+                    register.createAccountDatas
                     break
                 elif option == 2:
                     login.loginAccount

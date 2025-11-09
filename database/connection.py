@@ -1,4 +1,5 @@
 import psycopg2
+from psycopg2 import Error
 import os
 from dotenv import load_dotenv
 
@@ -21,11 +22,13 @@ class ConnectionPostgreSQL():
             # Execute a command: create datacamp_courses table
             cur.execute("""SELECT 1=1;
                 """)
-            rows = cur.fetchall()
-            # conn.close()
-            for row in rows:
-                if row: return conn
-        except:
-            print("Don't was possible connect to the database.")
+            row = cur.fetchall()
+            if row[0][0] == True: 
+                return conn
+            else:
+                print("Don't was possivel connect to the database.")
+        except Error as e:
+            print(f"Don't was possible connect to the database.{e}")
+            conn.rollback()
     def authentic(self):
         pass
