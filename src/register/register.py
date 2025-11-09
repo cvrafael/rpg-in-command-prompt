@@ -20,7 +20,14 @@ class Register():
     @property
     def createAccountDatas(self):
         self.name = input("Nome: ")
-        self.email = input("E-mail: ")
+        while True:
+            self.email = input("E-mail: ")
+            validate_email = create.validateEmailAccount(self.email)
+            if validate_email[0][0] == 1:
+                print("Este email já existe!") 
+                continue
+            else:
+                break
         self.cpf = input("CPF: ")
         self.login = input("login: ")
         self.password = getpass.getpass("Senha: ")

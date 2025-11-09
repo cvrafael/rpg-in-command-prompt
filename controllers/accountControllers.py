@@ -3,7 +3,7 @@ from psycopg2 import Error
 cnct = dc.ConnectionPostgreSQL()
 
 class ControllersAccount():
-    def __init__(self, ):
+    def __init__(self,):
         self.conn = cnct.connectPostgress 
         self.cursor = self.conn.cursor()
         self.name = ""
@@ -23,6 +23,19 @@ class ControllersAccount():
             self.conn.close()
             return row
 
+    
+    def validateEmailAccount(self, email):
+
+        try:
+            self.cursor.execute(f"SELECT count(email) FROM rpg.user_account WHERE email = '{email}';")
+            rows = self.cursor.fetchall()
+            if rows:
+                return rows
+            return rows
+        except Error as e:
+            print(f"Erro ao buscar dados: {e}")
+        
+    
     def createAccount(self, name, email, cpf):
         sql_insert_query = """
             INSERT INTO rpg.user_account (name, email, cpf)
