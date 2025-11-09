@@ -19,10 +19,10 @@ class Register():
         self.email = input("E-mail: ")
         self.cpf = input("CPF: ")
         self.login = input("login: ")
-        self.password = getpass.getpass("Password: ")
-        self.confirm_password = getpass.getpass("Confirm-password: ")
-        self.secret_key = input("Secret key: ")
-        print("Account created with succesfully!!")
+        self.password = getpass.getpass("Senha: ")
+        self.confirm_password = getpass.getpass("Confirme-senha: ")
+        self.secret_key = input("Chave secreta: ")
+        print("Conta criada com sucesso!!")
         
         return logging.loginAccount
     

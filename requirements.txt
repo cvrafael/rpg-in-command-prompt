@@ -1,5 +1,8 @@
+dotenv==0.9.9
 evdev==1.9.2
 keyboard==0.13.5
+psycopg2==2.9.11
 pynput==1.8.1
+python-dotenv==1.2.1
 python-xlib==0.33
 six==1.17.0
