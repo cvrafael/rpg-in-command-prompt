@@ -29,7 +29,14 @@ class Register():
             else:
                 break
         self.cpf = input("CPF: ")
-        self.login = input("login: ")
+        while True:
+            self.login = input("login: ")
+            validate_login = create.validateLogin(self.login)
+            if validate_login[0][0] == 1:
+                print("Este login já existe!") 
+                continue
+            else:
+                break  
         self.password = getpass.getpass("Senha: ")
         self.confirm_password = getpass.getpass("Confirme-senha: ")
         self.secret_key = input("Chave secreta: ")

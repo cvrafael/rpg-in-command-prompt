@@ -23,6 +23,7 @@ class ControllersAccount():
             self.conn.close()
             return row
 
+
     
     def validateEmailAccount(self, email):
 
@@ -35,6 +36,15 @@ class ControllersAccount():
         except Error as e:
             print(f"Erro ao buscar dados: {e}")
         
+    def validateLogin(self, login):
+        try:
+            self.cursor.execute(f"SELECT count(login) FROM rpg.login_account WHERE login = '{login}';")
+            rows = self.cursor.fetchall()
+            if rows:
+                return rows
+            return rows
+        except Error as e:
+            print(f"Erro ao buscar dados: {e}")
     
     def createAccount(self, name, email, cpf):
         sql_insert_query = """
@@ -64,11 +74,31 @@ class ControllersAccount():
             finally:
                 self.cursor.close()
                 self.conn.close()
-                print("Conta cadastrada com sucesso!")
 
     def validateLoginAccount(self, login, password):
         sql_insert_query = f"""
             SELECT login, password FROM rpg.login_account WHERE login = '{login}' and password = '{password}'
+        """
+        try:
+            self.cursor.execute(sql_insert_query)
+            rows = self.cursor.fetchall()
+            if rows:
+                self.cursor.close()
+                self.conn.close()
+            return rows
+
+        except Error as e:
+            print(f"Erro ao inserir dados: {e}")
+            self.conn.rollback()
+
+    def getLoginAccountInfos(self, login):
+        sql_insert_query = f"""
+            SELECT ru.name, ru.email, rl.login, rc.city FROM rpg.user_account as ru
+            INNER JOIN rpg.login_account as rl
+            on ru.id = rl.fk_id_user_account
+            INNER JOIN rpg.cities as rc
+            on rc.id = rl.fk_id_cities
+            where rl.login = '{login}'
         """
         try:
             self.cursor.execute(sql_insert_query)

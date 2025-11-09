@@ -1,7 +1,10 @@
 import getpass
 import controllers.accountControllers as ca
+import inGame.inGame as ii
 
+in_game = ii.InGame()
 validate_login = ca.ControllersAccount()
+login_account_infos = ca.ControllersAccount()
 
 class Login():
     def __init__(self,):
@@ -21,6 +24,8 @@ class Login():
             if validate:
                 if self.login == validate[0][0] and self.password == validate[0][1]:
                     print("Logado com sucesso!")
+                    account_infos = login_account_infos.getLoginAccountInfos(self.login)
+                    print(f"{account_infos}")
                     break
                 else:
                     print("Usuario ou senha incorreto. Tente novamente.")
@@ -29,5 +34,5 @@ class Login():
                 print("Usuario ou senha incorreto. Tente novamente.")
                 continue
         # Here will be the entrance to the game
-        return
+        return in_game.interfaceLogged(account_infos)
         
