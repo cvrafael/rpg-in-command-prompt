@@ -1,8 +1,9 @@
 
 import getpass
+import hashlib
 import login.login as ll
 import controllers.accountControllers as ca
-
+hs = hashlib.sha256()
 create = ca.ControllersAccount()
 select = ca.ControllersAccount()
 logging = ll.Login()
@@ -16,6 +17,10 @@ class Register():
         self.password = ""
         self.confirm_password = ""
         self.secret_key = ""
+
+    def securyPassword(self, password):
+        hs.update(password.encode(encoding="utf-8", errors="strict"))
+        return hs.hexdigest()
 
     @property
     def createAccountDatas(self):
@@ -38,10 +43,12 @@ class Register():
             else:
                 break  
         self.password = getpass.getpass("Senha: ")
+        encrypt_pasword = self.securyPassword(self.password)
         self.confirm_password = getpass.getpass("Confirme-senha: ")
         self.secret_key = input("Chave secreta: ")
         create.createAccount(self.name, self.email, self.cpf )
         id_user = select.selectAccount(self.email)
-        create.createLoginAccount(self.login, self.password, self.secret_key, id_user)
+        create.createLoginAccount(self.login, encrypt_pasword, self.secret_key, id_user)
         return logging.loginAccount
     
+ 
