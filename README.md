@@ -6,8 +6,11 @@ pip freeze > requirements.txt
 obsoluct_path = os.path.abspath(os.curdir)
 sys.path.insert(0, obsoluct_path)
 
+# Envio um comando para limpar o terminal
+os.system('cls' if os.name == 'nt' else 'clear')
+
 # Modelagem
 ![alt text](image.png)
 
-# Envio um comando para limpar o terminal
-os.system('cls' if os.name == 'nt' else 'clear')
+# Diagrama de classe
+![alt text](image-1.png)

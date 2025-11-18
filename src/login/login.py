@@ -2,9 +2,9 @@ import getpass
 import os
 import hashlib
 import controllers.accountControllers as ca
-import inGame.inGame as ii
+import Game.game as gg
 
-in_game = ii.InGame()
+in_game = gg.Game()
 validate_login = ca.ControllersAccount()
 login_account_infos = ca.ControllersAccount()
 
@@ -18,17 +18,14 @@ class Login():
     def loginAccount(self):
         while True:
             print("/" * 64)
-            print(" " * 10, self.LOGIN)
+            print(" " * 16, self.LOGIN)
             print("/" * 64)
-
+            
             self.login = input("Usuário: ")
             self.password = getpass.getpass("Senha: ")
-            print(f"self.pássword: {len(self.password)}")
             hs = hashlib.sha256()
             hs.update(self.password.encode())
-            print(f"hs.hexdigest(): {hs.hexdigest()}")
             validate = validate_login.validateLoginAccount(self.login, hs.hexdigest())
-            print(f"validate: {validate}")
             if validate != []:
                 if self.login == validate[0][0] and hs.hexdigest() == validate[0][1]:
                     print("Logado com sucesso!")

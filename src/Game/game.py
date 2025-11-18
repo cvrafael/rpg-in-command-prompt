@@ -1,10 +1,10 @@
 import os
-import character.character as cc
 import controllers.accountControllers as ca
-ca_select = ca.ControllersAccount()
-create = cc.Character()
-select = cc.Character()
-class InGame():
+import controllers.characterControllers as cc
+ca_select = cc.CharacterControllers()
+create = cc.CharacterControllers()
+select = cc.CharacterControllers()
+class Game():
     def __init__(self):
         pass
 
@@ -13,7 +13,6 @@ class InGame():
         id_cities = ca_select.selectCities
         info_character = {}
         count = 1
-        print(f"id_cities: {id_cities[0][0]}")
         print("/" * 32, f"Bem-Vindo, {name}", "/" * 32)
         print(" " * 32, f"Informações", " " * 32)
         print(" " * 32, f"E-mail: {email}", " " * 32)
@@ -31,9 +30,10 @@ class InGame():
                     option = int(input())
                     if option == 1:
                         nick = input("Nick do personagem")
-                        create.createCharacter(nick, id_login, id_cities[0][0])
+                        create.createCharacterAccount(nick, id_login, id_cities[0][0])
                 else:
-                    chars = select.selectCharacter(login)
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    chars = select.selectCharacterAccount(login)
                     print("/" * 32, f"Seus personagens", "/" * 32)
                     print(" " * 32,f"Nome:")
                     for char in chars:
@@ -47,20 +47,18 @@ class InGame():
                                     "City": char[5]
                                 }
                         })
-                        print(" " * 32,f"{count}-{info_character[f"{count}"]}")
+                        print(" " * 32,f"{count}-{info_character[f"{count}"]["Nome"]}")
                         count+=1
                     option = int(input("Escolhe seu personagem\n"))
                     os.system('cls' if os.name == 'nt' else 'clear')
-                    print(f"Personagem:\n \
-                          [{info_character[f"{option}"]["Nome"]}]\n \
-                          Level: {info_character[f"{option}"]["Level"]}\n \
-                          Força: {info_character[f"{option}"]["Strength"]}\n \
-                          Defesa: {info_character[f"{option}"]["Defense"]}\n \
-                          Vida: {info_character[f"{option}"]["Health"]}\n \
-                          Você está em: {info_character[f"{option}"]["City"]}\n \
-                          ")
-                    
-                            
+                    print(f"\
+[{info_character[f"{option}"]["Nome"]}]\n \
+Level: {info_character[f"{option}"]["Level"]}\n \
+Força: {info_character[f"{option}"]["Strength"]}\n \
+Defesa: {info_character[f"{option}"]["Defense"]}\n \
+Vida: {info_character[f"{option}"]["Health"]}\n \
+Você está em: {info_character[f"{option}"]["City"]}\n \
+                          ")                                                
             elif option == 2:
                 nick = input("Nick do personagem")
-                create.createCharacter(nick, id_login, id_cities[0][0]) 
+                create.createCharacterAccount(nick, id_login, id_cities[0][0]) 

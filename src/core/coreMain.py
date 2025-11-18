@@ -1,3 +1,4 @@
+import os
 import register.register as rr
 import login.login as ll
 register = rr.Register()
@@ -12,6 +13,7 @@ class CoreMain():
         print("/" * 64)
         print(" " * 10, self._interface)
         print("/" * 64)
+        self.menu
 
     @property
     def menu(self,):
@@ -22,9 +24,11 @@ class CoreMain():
                 option = int( input())
 
                 if option == 1:
+                    os.system('cls' if os.name == 'nt' else 'clear')
                     register.createAccountDatas
                     break
                 elif option == 2:
+                    os.system('cls' if os.name == 'nt' else 'clear')
                     login.loginAccount
                     break
                 else: 

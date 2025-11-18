@@ -10,7 +10,6 @@ logging = ll.Login()
 class Register():
     def __init__(self, ):
         self.name = ""
-        self.name = ""
         self.email = ""
         self.cpf = ""
         self.login = ""
@@ -23,7 +22,7 @@ class Register():
         return hs.hexdigest()
 
     @property
-    def createAccountDatas(self):
+    def createNewAccount(self):
         self.name = input("Nome: ")
         while True:
             self.email = input("E-mail: ")
