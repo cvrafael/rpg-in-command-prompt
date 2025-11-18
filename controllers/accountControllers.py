@@ -91,11 +91,13 @@ class ControllersAccount():
 
     def selectCharacterAccount(self, login):
         sql_select_query = f"""
-            SELECT rc.nick, rc.level FROM rpg.user_account as ru
+            SELECT rc.nick, rc.level, rc.strength, rc.defense, rc.health, rci.city FROM rpg.user_account as ru
             INNER JOIN rpg.login_account as rl
             on ru.id = rl.fk_id_user_account
 			LEFT JOIN rpg.character as rc
 			on rc.fk_id_login_account = rl.id
+            INNER JOIN rpg.cities as rci
+			on rc.fk_id_cities = rci.id
             where rl.login = '{login}'
         """
         try:
@@ -116,9 +118,6 @@ class ControllersAccount():
         try:
             self.cursor.execute(sql_insert_query)
             rows = self.cursor.fetchall()
-            if rows:
-                self.cursor.close()
-                self.conn.close()
             return rows
 
         except Error as e:
