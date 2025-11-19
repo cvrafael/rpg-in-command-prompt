@@ -25,17 +25,18 @@ class CoreMain():
 
                 if option == 1:
                     os.system('cls' if os.name == 'nt' else 'clear')
-                    register.createAccountDatas
+                    register.createNewAccount
                     break
                 elif option == 2:
                     os.system('cls' if os.name == 'nt' else 'clear')
+                    print(f"option: {option} estou aqui")
                     login.loginAccount
                     break
                 else: 
                     print(f"{option} não é uma opção valida!")
                     continue
-            except ValueError:
-                print("Entrada inválida. Por favor, digite um número.")
+            except ValueError as e:
+                print(f"Entrada inválida. Por favor, digite um número.{e}")
 
 
 

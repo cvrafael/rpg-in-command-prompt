@@ -88,7 +88,7 @@ class ControllersAccount(ConnectionPostgreSQL):
 
     def getLoginAccountInfos(self, login):
         sql_insert_query = f"""
-            SELECT rl.id, ru.name, ru.email, rl.login, rc.nick, rc.level FROM rpg.user_account as ru
+            SELECT rl.id, ru.name, ru.email, rl.login, rc.nick, rc.level, rc.fk_id_cities FROM rpg.user_account as ru
             INNER JOIN rpg.login_account as rl
             on ru.id = rl.fk_id_user_account
             LEFT JOIN rpg.character as rc

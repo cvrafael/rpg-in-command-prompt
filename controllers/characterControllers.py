@@ -7,7 +7,6 @@ class CharacterControllers(ConnectionPostgreSQL):
         self.cursor = self.conn.cursor()
 
     def createCharacterAccount(self, nick, id_login_account, fk_id_cities):
-        print(f"createCharacterAccount: {fk_id_cities}")
         sql_insert_query = """
             INSERT INTO rpg.character (nick, fk_id_login_account, fk_id_cities)
             VALUES (%s, %s, %s)
@@ -16,11 +15,8 @@ class CharacterControllers(ConnectionPostgreSQL):
             self.cursor.execute(sql_insert_query, (nick, id_login_account, fk_id_cities))
             self.conn.commit()
         except Error as e:
-            print(f"Erro ao inserir dados: {e}")
+            print(f"createCharacterAccount Erro ao inserir dados: {e}")
             self.conn.rollback()
-        finally:
-            self.cursor.close()
-            self.conn.close()
 
     def selectCharacterAccount(self, login):
         sql_select_query = f"""
@@ -36,12 +32,9 @@ class CharacterControllers(ConnectionPostgreSQL):
         try:
             self.cursor.execute(sql_select_query)
             rows = self.cursor.fetchall()
-            if rows:
-                self.cursor.close()
-                self.conn.close()
             return rows
         except Error as e:
-            print(f"Erro ao buscar dados: {e}")
+            print(f"selectCharacterAccount Erro ao buscar dados: {e}")
             self.conn.rollback()
     
     @property
@@ -50,8 +43,29 @@ class CharacterControllers(ConnectionPostgreSQL):
             self.cursor.execute(f"SELECT id FROM rpg.cities WHERE id = '1';")
             rows = self.cursor.fetchall()
         except Error as e:
-            print(f"Erro ao buscar dados: {e}")
+            print(f"selectCities Erro ao buscar dados: {e}")
         finally:
-            self.cursor.close()
-            self.conn.close()
             return rows
+        
+    @property
+    def selectAllCities(self):
+        try:
+            self.cursor.execute(f"SELECT * FROM rpg.cities ORDER BY id ASC;")
+            rows = self.cursor.fetchall()
+        except Error as e:
+            print(f"selectAllCities Erro ao buscar dados: {e}")
+        finally:
+            return rows
+        
+    def moveCharacter(self, id_city, nick):
+        sql_update_query = f"""
+            UPDATE rpg."character"
+            SET  fk_id_cities = '{id_city}'
+            WHERE nick = '{nick}';
+        """
+        try:
+            self.cursor.execute(sql_update_query)
+            self.conn.commit()
+        except Error as e:
+            print(f"moveCharacter Erro ao inserir dados: {e}")
+            self.conn.rollback()
