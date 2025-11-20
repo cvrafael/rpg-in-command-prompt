@@ -36,6 +36,25 @@ class CharacterControllers(ConnectionPostgreSQL):
         except Error as e:
             print(f"selectCharacterAccount Erro ao buscar dados: {e}")
             self.conn.rollback()
+
+    def selectOneCharacterAccount(self, nick):
+        sql_select_query = f"""
+            SELECT rc.nick, rc.level, rc.strength, rc.defense, rc.health, rci.city FROM rpg.user_account as ru
+            INNER JOIN rpg.login_account as rl
+            on ru.id = rl.fk_id_user_account
+			LEFT JOIN rpg.character as rc
+			on rc.fk_id_login_account = rl.id
+            INNER JOIN rpg.cities as rci
+			on rc.fk_id_cities = rci.id
+            where rc.nick = '{nick}'
+        """
+        try:
+            self.cursor.execute(sql_select_query)
+            rows = self.cursor.fetchall()
+            return rows
+        except Error as e:
+            print(f"selectCharacterAccount Erro ao buscar dados: {e}")
+            self.conn.rollback()
     
     @property
     def selectCities(self):
@@ -57,7 +76,7 @@ class CharacterControllers(ConnectionPostgreSQL):
         finally:
             return rows
         
-    def moveCharacter(self, id_city, nick):
+    def moveCharacterInTheCity(self, id_city, nick):
         sql_update_query = f"""
             UPDATE rpg."character"
             SET  fk_id_cities = '{id_city}'
