@@ -13,4 +13,4 @@ os.system('cls' if os.name == 'nt' else 'clear')
 ![alt text](image.png)
 
 # Diagrama de classe
-![alt text](image-1.png)
+![alt text](image-2.png)
