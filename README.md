@@ -1,5 +1,5 @@
 # Criar ambiente virtual
-*python3 -m venv 'my_project_venv ou venv ou qualquer coisa'*
+*python3 -m venv 'my_project_venv ou venv ou qualquer coisa'*<br>
 *source /home/crafael/Projects/rpg/venv/bin/activate* <- [Ativar ambiente virtual]
 *pip freeze* <- [Verifca libs]
 
@@ -10,7 +10,7 @@
 *pip freeze > requirements.txt*
 
 # Para importar arquivos a partir da raiz do projeto
-*obsoluct_path = os.path.abspath(os.curdir)*
+*obsoluct_path = os.path.abspath(os.curdir)*<br>
 *sys.path.insert(0, obsoluct_path)*
 
 # Envio um comando para limpar o terminal
